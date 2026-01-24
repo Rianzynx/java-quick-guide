@@ -3,24 +3,28 @@ import Header from './components/Header.jsx';
 import SearchBar from './components/SearchBar.jsx';
 import TopicList from './components/TopicList';
 import Sidebar from './components/Sidebar'
+import { javaTopics } from './data/topics.js';
 import './style/Home.css'
-import { FaCalendarAlt, FaCode, FaStream } from 'react-icons/fa'
+import './style/SearchResult.css'
+import { FaCalendarAlt, FaCode, FaStream, FaUserCircle } from 'react-icons/fa'
 
 function App() {
   const [search, setSearch] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const topics = [
-    'Converter data em String',
-    'Criar Enum',
-    'ForEach vs Stream',
-    'Optional em Java',
-    'LocalDate vs Date'
-  ]
+  const normalizeText = (text) => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
-  const filteredTopics = topics.filter(topic =>
-    topic.toLowerCase().includes(search.toLocaleLowerCase())
-  )
+  }
+
+  const filteredTopics = javaTopics.filter(topic => {
+    const normalizedTitle = normalizeText(topic.title);
+    const normalizedSearch = normalizeText(search);
+    return normalizedTitle.includes(normalizedSearch);
+  });
 
   return (
     <div className={`app-layout ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
@@ -29,6 +33,7 @@ function App() {
         <div className="header-row">
           <Header />
           <SearchBar search={search} onSearchChange={setSearch} />
+          <FaUserCircle size={32} color="#c9c9c9" cursor="pointer" />
         </div>
       </div>
 
@@ -50,8 +55,6 @@ function App() {
                 Aprenda Java de forma prática e direta. Explore tópicos, veja exemplos de código e teste suas habilidades.
               </p>
             </section>
-
-      
 
             <section className="highlights">
               <h2>Destaques</h2>
