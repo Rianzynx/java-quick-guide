@@ -51,9 +51,14 @@ O guia abrange as principais áreas da linguagem:
 
 ## 🖼️ Screenshots
 
-![Página Inicial](./screenshots/index.png)
-![Busca](./screenshots/search.png)
-![Detalhes](./screenshots/details.png)
+1. **Pagina inicial**
+![Página Inicial](./frontend/screenshots/index.png)
+
+2. **Resultado da pesquisa**
+![Busca](./frontend/screenshots/search.png)
+
+3. **Pesquisa em detalhe**
+![Detalhes](./frontend/screenshots/details.png)
 
 ---
 Desenvolvido com ☕ e React por **Rian**
