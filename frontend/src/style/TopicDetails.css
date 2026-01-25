@@ -1,0 +1,58 @@
+.topic-detail-container {
+  margin: 0 auto;
+  animation: fadeIn 0.3s ease-in; 
+}
+
+.category-tag {
+  background-color: #444;
+  color: #eb984a;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: default;
+}
+
+.detail-header h1 {
+  font-size: 22px;
+  margin: 10px 0px;
+}
+
+.back-button {
+  background: none;
+  border: 1px solid #444;
+  color: #aaaaaa;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  background: #333;
+  color: #678ca1;
+  border-color: #678ca1;
+}
+
+.use-case-box {
+  font-size: 15px;
+  margin: 3% 30px;
+}
+
+.code-block {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #f59e0b;
+  overflow-x: auto; 
+  margin-top: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  line-height: 1.5;
+  color: #e0e0e0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

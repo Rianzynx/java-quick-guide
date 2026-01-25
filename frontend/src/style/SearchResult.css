@@ -36,13 +36,11 @@
 
 .result-category {
   background-color: #444;
-  color: #f3c64b;
-  font-size: 0.7rem;
+  color: #eb984a;
+  font-size: 10px;
   text-transform: uppercase;
   padding: 2px 8px;
   border-radius: 4px;
-  font-weight: bold;
-  margin-left: 5px;
 }
 
 .result-arrow {

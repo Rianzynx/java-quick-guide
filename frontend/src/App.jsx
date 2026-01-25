@@ -6,10 +6,14 @@ import Sidebar from './components/Sidebar'
 import { javaTopics } from './data/topics.js';
 import './style/Home.css'
 import './style/SearchResult.css'
+import './style/TopicDetails.css'
 import { FaCalendarAlt, FaCode, FaStream, FaUserCircle } from 'react-icons/fa'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function App() {
   const [search, setSearch] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const normalizeText = (text) => {
@@ -41,12 +45,50 @@ function App() {
 
 
       <main className="main-content">
-        {search ? (
-          filteredTopics.length > 0 ? (
-            <TopicList topics={filteredTopics} />
-          ) : (
-            <p>Nenhum tópico encontrado.</p>
-          )
+        {selectedTopic ? (
+
+          <div className="topic-detail-container">
+            <button className="back-button" onClick={() => setSelectedTopic(null)}>
+              ← Voltar
+            </button>
+
+            <div className="detail-header">
+              <span className="category-tag">{selectedTopic.category}</span>
+              <h1>{selectedTopic.title}</h1>
+            </div>
+
+            <div className="detail-content">
+              <p>{selectedTopic.description}</p>
+
+              <div className="use-case-box">
+                <strong>Quando usar:</strong>
+                <p>{selectedTopic.useCase}</p>
+              </div>
+
+              {/* Renderiza o código apenas se ele existir no objeto */}
+              <div className="code-section">
+                <SyntaxHighlighter
+                  language="java"
+                  style={vscDarkPlus}
+                  customStyle={{ borderRadius: '8px', padding: '20px' }}
+                >
+                  {selectedTopic.code}
+                </SyntaxHighlighter>
+              </div>
+            </div>
+
+
+          </div>
+        ) : search ? (
+
+          <TopicList
+            topics={filteredTopics}
+            onTopicClick={(topic) => {
+              console.log('Tópico clicado:', topic.title);
+              setSelectedTopic(topic);
+            }}
+          />
+
         ) : (
           <>
             <section className="welcome-section">
