@@ -51,8 +51,13 @@ O guia abrange as principais áreas da linguagem:
 
 ## 🖼️ Screenshots
 
+1. **Pagina inicial**
 ![Página Inicial](./frontend/screenshots/index.png)
+
+2. **Resultado da pesquisa**
 ![Busca](./frontend/screenshots/search.png)
+
+3. **Pesquisa em detalhe**
 ![Detalhes](./frontend/screenshots/details.png)
 
 ---
