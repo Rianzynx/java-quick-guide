@@ -3,6 +3,7 @@ import Header from './components/Header.jsx';
 import SearchBar from './components/SearchBar.jsx';
 import TopicList from './components/TopicList';
 import Sidebar from './components/Sidebar'
+import TopicDetails from './components/TopicDetails.jsx';
 import { javaTopics } from './data/topics.js';
 import './style/Home.css'
 import './style/SearchResult.css'
@@ -12,23 +13,31 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function App() {
+  // Estados principais da aplicação
+  const [activeSection, setActiveSection] = useState('Início');
   const [search, setSearch] = useState('');
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [filterCategory, setFilterCategory] = useState("Todos");
 
+  // Normaliza texto removendo acentos para busca
   const normalizeText = (text) => {
     return text
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
-
   }
 
+  // Filtra tópicos por busca e categoria
   const filteredTopics = javaTopics.filter(topic => {
-    const normalizedTitle = normalizeText(topic.title);
-    const normalizedSearch = normalizeText(search);
-    return normalizedTitle.includes(normalizedSearch);
-  });
+    const matchesSearch = normalizeText(topic.title).includes(normalizeText(search));
+    const matchesCategory = filterCategory === 'Todos' || topic.category === filterCategory;
+    return matchesSearch && matchesCategory;
+  })
+    .sort((a, b) => a.title.localeCompare(b.title));
+
+  // Extrai categorias únicas dos tópicos
+  const categories = ['Todos', ...new Set(javaTopics.map(t => t.category))];
 
   return (
     <div className={`app-layout ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
@@ -41,55 +50,38 @@ function App() {
         </div>
       </div>
 
-      <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
-
+      <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} onNavigate={setActiveSection} />
 
       <main className="main-content">
+        {/* Exibe detalhes de um tópico selecionado */}
         {selectedTopic ? (
-
-          <div className="topic-detail-container">
-            <button className="back-button" onClick={() => setSelectedTopic(null)}>
-              ← Voltar
-            </button>
-
-            <div className="detail-header">
-              <span className="category-tag">{selectedTopic.category}</span>
-              <h1>{selectedTopic.title}</h1>
-            </div>
-
-            <div className="detail-content">
-              <p>{selectedTopic.description}</p>
-
-              <div className="use-case-box">
-                <strong>Quando usar:</strong>
-                <p>{selectedTopic.useCase}</p>
-              </div>
-
-              {/* Renderiza o código apenas se ele existir no objeto */}
-              <div className="code-section">
-                <SyntaxHighlighter
-                  language="java"
-                  style={vscDarkPlus}
-                  customStyle={{ borderRadius: '8px', padding: '20px' }}
-                >
-                  {selectedTopic.code}
-                </SyntaxHighlighter>
-              </div>
-            </div>
-
-
-          </div>
-        ) : search ? (
-
-          <TopicList
-            topics={filteredTopics}
-            onTopicClick={(topic) => {
-              console.log('Tópico clicado:', topic.title);
-              setSelectedTopic(topic);
-            }}
+          <TopicDetails 
+            topic={selectedTopic} 
+            onBack={() => setSelectedTopic(null)} 
           />
+        ) : (search.trim() !== '' || activeSection === 'Tópicos') ? (
+          // Exibe lista de tópicos com filtros
+          <>
+            <div className="filter-bar">
+              {categories.map(cat => (
+                <button
+                  key={cat}
+                  className={`filter-btn ${filterCategory === cat ? 'active' : ''}`}
+                  onClick={() => setFilterCategory(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            <TopicList
+              topics={filteredTopics}
+              onTopicClick={(topic) => setSelectedTopic(topic)}
+            />
+          </>
 
         ) : (
+          // Exibe página inicial com destaques
           <>
             <section className="welcome-section">
               <h1>Bem-vindo</h1>

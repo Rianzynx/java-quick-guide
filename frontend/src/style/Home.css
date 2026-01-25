@@ -66,6 +66,28 @@
   margin: 0;
 }
 
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  overflow-x: auto; 
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #486aa0;
+  background: transparent;
+  color: #c9c9c9;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: #486aa0;
+  color: white;
+}
 
 
 @media (max-width: 768px) {

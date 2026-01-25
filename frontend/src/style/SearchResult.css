@@ -36,11 +36,31 @@
 
 .result-category {
   background-color: #444;
-  color: #eb984a;
+  color: #ffffff;
   font-size: 10px;
   text-transform: uppercase;
   padding: 2px 8px;
   border-radius: 4px;
+}
+
+.tag-fundamentos {
+    background-color: #3b63a4; 
+}
+
+.tag-logica {
+    background-color: #2e985c; 
+}
+
+.tag-interatividade {
+    background-color: #94a71a;
+}
+
+.tag-estrutura {
+    background-color: #ba4e4e;
+}
+
+.tag-poo {
+    background-color: #5d4c86; 
 }
 
 .result-arrow {

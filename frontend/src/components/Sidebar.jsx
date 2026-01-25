@@ -1,6 +1,6 @@
 import { FaHome, FaChartLine, FaBook, FaGamepad, FaLink, FaStar } from 'react-icons/fa';
 
-function Sidebar({ isOpen, onToggle }) {
+function Sidebar({ isOpen, onToggle, onNavigate }) {
   return (
     <aside className="sidebar">
       <button className="sidebar-toggle" onClick={onToggle}>
@@ -8,14 +8,31 @@ function Sidebar({ isOpen, onToggle }) {
       </button>
 
       <ul className="sidebar-menu">
-        <li>{isOpen ? <> Início</> : <FaHome />}</li>
-        <li>{isOpen ? <> Progresso</> : <FaChartLine />}</li>
-        <li>{isOpen ? <> Tópicos</> : <FaBook />}</li>
-        <li>{isOpen ? <> Desafios</> : <FaGamepad />}</li>
-        <li>{isOpen ? <> Fontes</> : <FaLink />}</li>
-        <li>{isOpen ? <> Recomendações</> : <FaStar />}</li>
+        <li onClick={() => onNavigate('Início')}>
+          {isOpen ? <> <FaHome /> Início</> : <FaHome />}
+        </li>
+        
+        <li onClick={() => onNavigate('Progresso')}>
+          {isOpen ? <> <FaChartLine /> Progresso</> : <FaChartLine />}
+        </li>
+
+        <li onClick={() => onNavigate('Tópicos')}>
+          {isOpen ? <> <FaBook /> Tópicos</> : <FaBook />}
+        </li>
+
+        <li onClick={() => onNavigate('Desafios')}>
+          {isOpen ? <> <FaGamepad /> Desafios</> : <FaGamepad />}
+        </li>
+
+        <li onClick={() => onNavigate('Fontes')}>
+          {isOpen ? <> <FaLink /> Fontes</> : <FaLink />}
+        </li>
+
+        <li onClick={() => onNavigate('Recomendações')}>
+          {isOpen ? <> <FaStar /> Recomendações</> : <FaStar />}
+        </li>
       </ul>
-    </aside>
+    </aside >
   );
 }
 export default Sidebar

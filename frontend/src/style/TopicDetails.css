@@ -1,11 +1,10 @@
 .topic-detail-container {
   margin: 0 auto;
+  padding-bottom: 20px;
   animation: fadeIn 0.3s ease-in; 
 }
 
 .category-tag {
-  background-color: #444;
-  color: #eb984a;
   font-size: 11px;
   text-transform: uppercase;
   padding: 2px 8px;
@@ -40,16 +39,8 @@
   margin: 3% 30px;
 }
 
-.code-block {
-  background-color: #1a1a1a;
-  padding: 20px;
-  border-radius: 8px;
-  border-left: 4px solid #f59e0b;
-  overflow-x: auto; 
-  margin-top: 20px;
-  font-family: 'Courier New', Courier, monospace;
-  line-height: 1.5;
-  color: #e0e0e0;
+.code-section {
+  margin: 20px 0px;
 }
 
 @keyframes fadeIn {
