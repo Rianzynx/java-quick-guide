@@ -51,7 +51,9 @@ O guia abrange as principais áreas da linguagem:
 
 ## 🖼️ Screenshots
 
-> `![Screenshot do Projeto](./screenshots/home.png)`
+> `![Screenshot do Projeto](./screenshots/index.png)`
+> `![Screenshot do Projeto](./screenshots/search.png)`
+> `![Screenshot do Projeto](./screenshots/details.png)`
 
 ---
 Desenvolvido com ☕ e React por **Rian**
