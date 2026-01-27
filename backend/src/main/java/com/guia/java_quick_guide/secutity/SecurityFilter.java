@@ -36,8 +36,8 @@ public class SecurityFilter extends OncePerRequestFilter {
 
                 if (userOptional.isPresent()) {
                     var user = userOptional.get();
-                    // se o usuario existe, libera o acesso
-                    var authentication = new UsernamePasswordAuthenticationToken(user, null, null);
+                    // Passando as authorities para o Spring saber se é ADMIN ou USER
+                    var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
