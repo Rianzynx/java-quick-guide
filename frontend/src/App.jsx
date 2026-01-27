@@ -1,16 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Header.jsx';
 import SearchBar from './components/SearchBar.jsx';
 import TopicList from './components/TopicList';
 import Sidebar from './components/Sidebar'
 import TopicDetails from './components/TopicDetails.jsx';
-import { javaTopics } from './data/topics.js';
 import './style/Home.css'
 import './style/SearchResult.css'
 import './style/TopicDetails.css'
 import { FaCalendarAlt, FaCode, FaStream, FaUserCircle } from 'react-icons/fa'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function App() {
   // Estados principais da aplicação
@@ -19,6 +16,34 @@ function App() {
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [filterCategory, setFilterCategory] = useState("Todos");
+
+  const [topics, setTopics] = useState([]); //Inicia com uma lista vazia
+  const [loading, setLoading] = useState(true); //Estado de carregamento
+
+  useEffect(() => {
+    // Carregamento de dados da API (Fetch)
+    const fetchTopics = async () => {
+      try {
+        setLoading(true);
+
+        const response = await fetch("Http://localhost:8080/api/topics");
+
+        if (!response.ok) {
+          throw new Error("erro ao buscar dados do servidor");
+        }
+
+        const data = await response.json();
+        setTopics(data); // Dados vindo do PostgreSQL via API
+        setLoading(false);
+
+      } catch (error) {
+
+        console.error("Erro ao carregar tópicos:", error);
+        setLoading(false);
+      }
+    };
+    fetchTopics();
+  }, []);
 
   // Normaliza texto removendo acentos para busca
   const normalizeText = (text) => {
@@ -29,7 +54,7 @@ function App() {
   }
 
   // Filtra tópicos por busca e categoria
-  const filteredTopics = javaTopics.filter(topic => {
+  const filteredTopics = topics.filter(topic => {
     const matchesSearch = normalizeText(topic.title).includes(normalizeText(search));
     const matchesCategory = filterCategory === 'Todos' || topic.category === filterCategory;
     return matchesSearch && matchesCategory;
@@ -37,7 +62,7 @@ function App() {
     .sort((a, b) => a.title.localeCompare(b.title));
 
   // Extrai categorias únicas dos tópicos
-  const categories = ['Todos', ...new Set(javaTopics.map(t => t.category))];
+  const categories = ['Todos', ...new Set(topics.map(t => t.category))];
 
   return (
     <div className={`app-layout ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
@@ -54,10 +79,12 @@ function App() {
 
       <main className="main-content">
         {/* Exibe detalhes de um tópico selecionado */}
-        {selectedTopic ? (
-          <TopicDetails 
-            topic={selectedTopic} 
-            onBack={() => setSelectedTopic(null)} 
+        {loading ? (
+          <div className="loading-container">Carregando tópicos...</div>
+        ) : selectedTopic ? (
+          <TopicDetails
+            topic={selectedTopic}
+            onBack={() => setSelectedTopic(null)}
           />
         ) : (search.trim() !== '' || activeSection === 'Tópicos') ? (
           // Exibe lista de tópicos com filtros
