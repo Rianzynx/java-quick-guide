@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .user-menu-container {
   position: relative;
 }
@@ -47,6 +48,8 @@
   border-top: 1px solid #804b17;
 }
 
+=======
+>>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
 .welcome-section h1 {
   font-size: 24px;
   margin-bottom: 8px;
@@ -78,14 +81,22 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+<<<<<<< HEAD
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+=======
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+>>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
 
 .card:hover {
   transform: translateY(-5px);
+<<<<<<< HEAD
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+=======
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+>>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
 }
 
 .card h3 {
@@ -120,7 +131,11 @@
   gap: 10px;
   margin-bottom: 20px;
   padding: 10px 0;
+<<<<<<< HEAD
   overflow-x: auto;
+=======
+  overflow-x: auto; 
+>>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
 }
 
 .filter-btn {
@@ -133,8 +148,12 @@
   transition: 0.3s;
 }
 
+<<<<<<< HEAD
 .filter-btn.active,
 .filter-btn:hover {
+=======
+.filter-btn.active, .filter-btn:hover {
+>>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
   background: #486aa0;
   color: white;
 }

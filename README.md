@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+# java-quick-guide
+Guia rápido de Java com exemplos práticos, feito com Java + Spring Boot e React.
+=======
+>>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
 # ☕ Java Learning Guide
 
 Um guia interativo e moderno para consulta rápida de conceitos fundamentais e avançados da linguagem Java. Este projeto foi desenvolvido para auxiliar desenvolvedores a revisarem sintaxes, regras de negócio e casos de uso de forma visual e organizada.
@@ -62,3 +69,7 @@ O guia abrange as principais áreas da linguagem:
 
 ---
 Desenvolvido com ☕ e React por **Rian**
+<<<<<<< HEAD
+=======
+>>>>>>> 9fc27a8 (Add screenshots to README)
+>>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
