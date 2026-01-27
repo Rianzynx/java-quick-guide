@@ -4,7 +4,7 @@ function Header() {
     return (
         <div className="header-text">
             <div className="title-with-icon">
-                <img src={java} alt="Ícone Java" />
+                <img src={java} alt="Icone Java" />
                 <h1>Java Quick Guide</h1>
             </div>
         </div>
