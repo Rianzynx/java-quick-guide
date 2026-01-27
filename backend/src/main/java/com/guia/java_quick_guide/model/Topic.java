@@ -15,6 +15,7 @@ public class Topic {
     private Long id;
 
     @NotBlank(message = "O título é obrigatório")
+    @Column(unique = true, nullable = false)
     private String title;
 
     @NotBlank(message = "A descrição não deve estar vazia")

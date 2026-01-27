@@ -27,7 +27,7 @@ public class UserController {
         return repository.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> criar(@Valid @RequestBody User user) {
         try {
             user.setPassword(encoder.encode(user.getPassword()));
