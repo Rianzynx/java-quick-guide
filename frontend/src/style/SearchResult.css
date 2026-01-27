@@ -1,0 +1,70 @@
+.search-results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 0;
+}
+
+.search-result-card {
+  background-color: #2a2a2a; 
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s, background-color 0.2s;
+  cursor: pointer;
+}
+
+.search-result-card:hover {
+  background-color: #333;
+  transform: translateX(5px);
+  border-color: #c1861f; 
+}
+
+.result-title {
+  color: #d4d4d4;
+  margin: 4px 0;
+  font-size: 16px;
+}
+
+.result-description {
+  color: #a0a0a0;
+  font-size: 14px;
+}
+
+.result-category {
+  background-color: #444;
+  color: #ffffff;
+  font-size: 10px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.tag-fundamentos {
+    background-color: #3b63a4; 
+}
+
+.tag-logica {
+    background-color: #2e985c; 
+}
+
+.tag-interatividade {
+    background-color: #94a71a;
+}
+
+.tag-estrutura {
+    background-color: #ba4e4e;
+}
+
+.tag-poo {
+    background-color: #5d4c86; 
+}
+
+.result-arrow {
+  color: #f59e0b;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
