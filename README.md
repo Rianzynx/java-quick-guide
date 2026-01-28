@@ -75,7 +75,7 @@ npm run dev
 
 ## 🖼️ Screenshots
 
-<div align="center"> <img src="./frontend/screenshots/index.png" alt="Página Inicial" width="400px"> <img src="./frontend/screenshots/search.png" alt="Busca" width="400px"> <img src="./frontend/screenshots/details.png" alt="Detalhes" width="400px"> <img src="./frontend/screenshots/menuUser.png" alt="MenuUser" width="400px"> </div
+<div align="center"> <img src="./frontend/screenshots/index.png" alt="Página Inicial" width="400px"> <img src="./frontend/screenshots/search.png" alt="Busca" width="400px"> <img src="./frontend/screenshots/details.png" alt="Detalhes" width="400px"> <img src="./frontend/screenshots/menuUser.png" alt="MenuUser" width="200px" height="200px"> </div
 
 ---
 Desenvolvido com ☕ e React por **Rian**
