@@ -8,7 +8,7 @@ target/
 
 ### Spring Boot ###
 .mvn/wrapper/maven-wrapper.properties
-# application.properties 
+application.properties 
 
 ### IDEs ###
 .idea/
