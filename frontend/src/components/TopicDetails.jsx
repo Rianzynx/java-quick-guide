@@ -19,11 +19,6 @@ const TopicDetails = ({ topic, onBack }) => {
 
       <div className="detail-content">
         <p>{topic.description}</p>
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
         <div className="use-case-box">
           <strong>Quando usar:</strong>
           <p>{topic.useCase}</p>
@@ -40,11 +35,7 @@ const TopicDetails = ({ topic, onBack }) => {
               borderLeft: '4px solid #f59e0b',
               fontSize: '14px',
               lineHeight: '1.5',
-<<<<<<< HEAD
               marginBottom: '40px'
-=======
-              marginBottom: '40px' // Lembra do problema do scroll? Resolvido aqui.
->>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
             }}
           >
             {topic.code}

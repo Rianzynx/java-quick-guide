@@ -1,6 +1,11 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../Contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import javaLogo from '../assets/java.svg';
+
+//Estilos
+import '../style/Login.css';
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -30,14 +35,19 @@ export const Login = () => {
     };
 
     return (
-        <div className="auth-container">
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} required />
-                <input type="password" placeholder="Senha" onChange={e => setPassword(e.target.value)} required />
-                <button type="submit">Entrar</button>
-            </form>
-            <p>Não tem conta? <a href="/register">Cadastre-se</a></p>
+        <div className="login-container">
+            <div className="auth-container">
+                <img src={javaLogo} alt="Ícone Java" width={50} height={80} className="login-icon" />
+                <h2>Login</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className='input-group'>
+                        <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} required />
+                        <input type="password" placeholder="Senha" onChange={e => setPassword(e.target.value)} required />
+                        <button id="login-button" type="submit">Entrar</button>
+                    </div>
+                </form>
+                <p>Não tem conta? <Link id="register-link" to="/register">Cadastre-se</Link></p>
+            </div>
         </div>
     );
 };
