@@ -52,7 +52,7 @@ public class SecurityConfig {
         // Ajuste aqui:
         configuration.setAllowedOriginPatterns(Arrays.asList(
                 "http://localhost:5173",
-                "https://seu-front-no-render.onrender.com" // Substitua pela sua URL do Render quando tiver
+                "https://frontend-quick-guide.onrender.com/" // Substitua pela sua URL do Render quando tiver
         ));
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
