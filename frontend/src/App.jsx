@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react'; 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './Contexts/AuthContext.jsx';
 import { Home } from './pages/Home.jsx';
@@ -7,7 +7,7 @@ import { Register } from './pages/Register.jsx';
 import api from './services/api';
 
 // Fontes
-import "@fontsource/jetbrains-mono";
+import "@fontsource/jetbrains-mono"; 
 import "@fontsource/jetbrains-mono/400.css";
 
 // Estilos
@@ -15,15 +15,18 @@ import './style/Home.css'
 import './style/SearchResult.css'
 import './style/TopicDetails.css'
 
-const AppRoutes = ({
-  sidebarOpen, setSidebarOpen, search, setSearch,
-  activeSection, setActiveSection, loading, selectedTopic,
-  setSelectedTopic, categories, filterCategory, setFilterCategory, filteredTopics
+// COMPONENTE DE ROTAS (Recebendo fetchTopics como Prop)
+const AppRoutes = ({ 
+  fetchTopics, 
+  sidebarOpen, setSidebarOpen, search, setSearch, 
+  activeSection, setActiveSection, loading, selectedTopic, 
+  setSelectedTopic, categories, filterCategory, setFilterCategory, filteredTopics 
 }) => {
   const { token } = useContext(AuthContext);
-
+ 
   return (
     <Routes>
+      {/* Agora passamos a função para o Login carregar os dados após autenticar */}
       <Route path="/login" element={<Login onLoginSuccess={fetchTopics} />} />
       <Route path="/register" element={<Register />} />
       <Route
@@ -67,21 +70,16 @@ function App() {
   const fetchTopics = async () => {
     try {
       setLoading(true);
-
-      // Chamada usando a instância 'api' (já tem a baseURL e o token via interceptor)
       const response = await api.get('/topics');
-
-      // No Axios, os dados vêm dentro de .data
       setTopics(response.data);
-
     } catch (error) {
       console.error("Erro ao carregar tópicos:", error);
-      // O tratamento de 401/403 deve estar no seu interceptor do api.js
     } finally {
       setLoading(false);
     }
   };
 
+  // Carrega ao montar o app se já estiver logado
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -99,18 +97,17 @@ function App() {
   }
 
   const filteredTopics = topics.filter(topic => {
-    const matchesSearch = normalizeText(topic.title).includes(normalizeText(search));
-    const matchesCategory = filterCategory === 'Todos' || topic.category === filterCategory;
+    const matchesSearch = normalizeText(topic.title).includes(normalizeText(search)); 
+    const matchesCategory = filterCategory === 'Todos' || topic.category === filterCategory; 
     return matchesSearch && matchesCategory;
   }).sort((a, b) => (a.title || "").localeCompare(b.title || ""));
 
   const categories = ['Todos', ...new Set(topics.map(t => t.category))];
-
   return (
-    <AuthProvider>
+    <AuthProvider> 
       <BrowserRouter>
-        <AppRoutes
-          fetchTopics={fetchTopics}
+        <AppRoutes 
+          fetchTopics={fetchTopics} 
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
           search={search}
