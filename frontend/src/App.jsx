@@ -86,7 +86,7 @@ function App() {
         return;
       }
 
-      const response = await fetch("/topics", {
+      const response = await fetch("topics", {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
