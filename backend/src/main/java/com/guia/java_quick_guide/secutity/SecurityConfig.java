@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults()) // Ativa o CORS usando as configurações do sistema
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, "/api/topics/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll() // Permite login/cadastro
                         .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // LIBERA O PREFLIGHT DO NAVEGADOR
@@ -47,7 +48,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+
+        // Ajuste aqui:
+        configuration.setAllowedOriginPatterns(Arrays.asList(
+                "http://localhost:5173",
+                "https://seu-front-no-render.onrender.com" // Substitua pela sua URL do Render quando tiver
+        ));
+
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);

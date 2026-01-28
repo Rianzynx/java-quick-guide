@@ -10,14 +10,7 @@ export const Register = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:8080/api/users/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
-        });
+
 
         if (password.length < 3) {
             alert("A senha deve ter no mínimo 3 caracteres!");
@@ -29,11 +22,26 @@ export const Register = () => {
             return;
         }
 
-        if (response.ok) {
-            alert("Cadastro realizado! Agora faça login.");
-            navigate('/login');
-        } else {
-            alert("Erro ao cadastrar. O e-mail pode já estar em uso.");
+        try {
+            const response = await fetch('http://localhost:8080/api/users/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+
+
+            if (response.ok) {
+                alert("Cadastro realizado! Agora faça login.");
+                navigate('/login');
+            } else {
+                alert("Erro ao cadastrar. O e-mail pode já estar em uso.");
+            }
+        } catch (error) {
+            console.error("Erro na requisição", error);
+            alert("Erro ao conectar ao servidor.");
         }
     };
 

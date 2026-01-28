@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.guia.java_quick_guide.model.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -13,7 +14,8 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-    private String secret  = "chave-secreta";
+    @Value("${api.security.token.secret:chave-padrao-segura}")
+    private String secret;
 
     public String generateToken(User user) {
         try {

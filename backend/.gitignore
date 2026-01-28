@@ -1,25 +1,33 @@
-### Java & Maven ###
+HELP.md
 target/
-*.class
-*.jar
-*.war
-*.ear
-*.log
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-### Spring Boot ###
-.mvn/wrapper/maven-wrapper.properties
-application.properties 
-
-### IDEs ###
-.idea/
-.vscode/
-*.iml
-.project
+### STS ###
+.apt_generated
 .classpath
-.settings/
-nbproject/
-build/
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
-### Sistema ###
-.DS_Store
-Thumbs.db
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
