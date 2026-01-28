@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.guia.java_quick_guide.JavaQuickGuideApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.626 s -- in com.guia.java_quick_guide.JavaQuickGuideApplicationTests
