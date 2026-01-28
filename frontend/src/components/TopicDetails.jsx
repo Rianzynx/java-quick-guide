@@ -1,6 +1,7 @@
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
+
 const TopicDetails = ({ topic, onBack }) => {
   if (!topic) return null;
 
@@ -35,7 +36,8 @@ const TopicDetails = ({ topic, onBack }) => {
               borderLeft: '4px solid #f59e0b',
               fontSize: '14px',
               lineHeight: '1.5',
-              marginBottom: '40px'
+              marginBottom: '40px',
+              fontFamily: 'JetBrains Mono, monospace',
             }}
           >
             {topic.code}

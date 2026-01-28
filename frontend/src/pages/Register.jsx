@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import javaLogo from '../assets/java.svg';
 
 export const Register = () => {
     const [email, setEmail] = useState('');
@@ -26,13 +27,29 @@ export const Register = () => {
     };
 
     return (
-        <div className="auth-container">
-            <h2>Criar Conta</h2>
-            <form onSubmit={handleRegister}>
-                <input type="email" placeholder="Seu melhor email" onChange={e => setEmail(e.target.value)} required />
-                <input type="password" placeholder="Mínimo 3 caracteres" onChange={e => setPassword(e.target.value)} required />
-                <button type="submit">Cadastrar</button>
-            </form>
+        <div className="login-container"> {/* Container do background */}
+            <div className="auth-container">
+                <img src={javaLogo} alt="Ícone Java" width={50} height={80} className="login-icon" />
+                <h2>Criar Conta</h2>
+                <form onSubmit={handleRegister}>
+                    <div className="input-group">
+                        <input 
+                            type="email" 
+                            placeholder="Seu melhor email" 
+                            onChange={e => setEmail(e.target.value)} 
+                            required 
+                        />
+                        <input 
+                            type="password" 
+                            placeholder="Mínimo 3 caracteres" 
+                            onChange={e => setPassword(e.target.value)} 
+                            required 
+                        />
+                        <button id="login-button" type="submit">Cadastrar</button>
+                    </div>
+                </form>
+                <p>Já tem uma conta? <Link id="register-link" to="/login">Faça Login</Link></p>
+            </div>
         </div>
     );
 };

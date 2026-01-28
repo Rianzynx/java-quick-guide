@@ -1,3 +1,5 @@
+
+
 .topic-detail-container {
   margin: 0 auto;
   padding-bottom: 20px;
@@ -41,6 +43,7 @@
 
 .code-section {
   margin: 20px 0px;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 @keyframes fadeIn {

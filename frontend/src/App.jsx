@@ -5,6 +5,10 @@ import { Home } from './pages/Home.jsx';
 import { Login } from './pages/Login.jsx';
 import { Register } from './pages/Register.jsx';
 
+// Fontes
+import "@fontsource/jetbrains-mono"; 
+import "@fontsource/jetbrains-mono/400.css";
+
 // Estilos
 import './style/Home.css'
 import './style/SearchResult.css'

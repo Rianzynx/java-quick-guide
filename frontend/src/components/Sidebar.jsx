@@ -9,27 +9,27 @@ function Sidebar({ isOpen, onToggle, onNavigate }) {
 
       <ul className="sidebar-menu">
         <li onClick={() => onNavigate('Início')}>
-          {isOpen ? <> <FaHome /> Início</> : <FaHome />}
+          {isOpen ? "Início" : <FaHome />}
         </li>
-        
+
         <li onClick={() => onNavigate('Progresso')}>
-          {isOpen ? <> <FaChartLine /> Progresso</> : <FaChartLine />}
+          {isOpen ? "Progresso" : <FaChartLine />}
         </li>
 
         <li onClick={() => onNavigate('Tópicos')}>
-          {isOpen ? <> <FaBook /> Tópicos</> : <FaBook />}
+          {isOpen ? "Tópicos" : <FaBook />}
         </li>
 
         <li onClick={() => onNavigate('Desafios')}>
-          {isOpen ? <> <FaGamepad /> Desafios</> : <FaGamepad />}
+          {isOpen ? "Desafios" : <FaGamepad />}
         </li>
 
         <li onClick={() => onNavigate('Fontes')}>
-          {isOpen ? <> <FaLink /> Fontes</> : <FaLink />}
+          {isOpen ? "Fontes" : <FaLink />}
         </li>
 
         <li onClick={() => onNavigate('Recomendações')}>
-          {isOpen ? <> <FaStar /> Recomendações</> : <FaStar />}
+          {isOpen ? "Recomendações" : <FaStar />}
         </li>
       </ul>
     </aside >

@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+
 }
 
 html,
@@ -188,12 +189,13 @@ li:hover {
 }
 
 .sidebar-closed .sidebar {
-  width: 40px;
+  width: 5%;
 }
 
 .sidebar-closed .sidebar-content {
   display: none;
 }
+
 
 .main-content {
   flex: 1;
