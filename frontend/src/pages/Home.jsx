@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { FaCalendarAlt, FaCode, FaStream, FaUserCircle } from 'react-icons/fa';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -19,6 +19,27 @@ export const Home = ({
     const [showUserMenu, setShowUserMenu] = useState(false);
     const { logout } = useContext(AuthContext);
 
+    // referência para o container do menu
+    const menuRef = useRef(null);
+
+    // efeito para monitorar cliques na tela
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            // Se o menu estiver aberto e o cliquen não for dentro do menuRef
+            if (showUserMenu && menuRef.current && !menuRef.current.contains(event.target)) {
+                setShowUserMenu(false);
+            }
+        };
+
+        // Adiciona o evento ao carregar
+        document.addEventListener('mousedown', handleClickOutside);
+        
+        // Limpa o evento ao destruir o componente 
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showUserMenu]); // Re-executa sempre que o estado do menu mudar
+
     return (
         <div className={`app-layout ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
             <div className="header-container">
@@ -26,7 +47,7 @@ export const Home = ({
                     <Header />
                     <SearchBar search={search} onSearchChange={setSearch} />
 
-                    <div className="user-menu-wrapper" style={{ position: 'relative' }}>
+                    <div className="user-menu-wrapper" ref={menuRef} style={{ position: 'relative' }}>
                         <FaUserCircle
                             size={32}
                             color="#e7e7e7"
