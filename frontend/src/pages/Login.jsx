@@ -3,9 +3,12 @@ import { AuthContext } from '../Contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import javaLogo from '../assets/java.svg';
+import { FaGithubSquare } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 
 //Estilos
 import '../style/Login.css';
+import '../style/Auth.css';
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -47,6 +50,15 @@ export const Login = () => {
                     </div>
                 </form>
                 <p>Não tem conta? <Link id="register-link" to="/register">Cadastre-se</Link></p>
+
+                <div className="icons-footer">
+                    <a href="https://github.com/Rianzynx" className="icon-wrapper" id="icon-github">
+                        <FaGithubSquare />
+                    </a>
+                    <a href="https://www.linkedin.com/in/rian-alves/" className="icon-wrapper" id="icon-linkedin">
+                        <FaLinkedin />
+                    </a>
+                </div>
             </div>
         </div>
     );

@@ -5,6 +5,7 @@ import javaLogo from '../assets/java.svg';
 export const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
 
     const handleRegister = async (e) => {
@@ -13,10 +14,20 @@ export const Register = () => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                email: email,       
-                password: password    
+                email: email,
+                password: password
             })
         });
+
+        if (password.length < 3) {
+            alert("A senha deve ter no mínimo 3 caracteres!");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            alert("As senhas não coincidem!");
+            return;
+        }
 
         if (response.ok) {
             alert("Cadastro realizado! Agora faça login.");
@@ -33,18 +44,27 @@ export const Register = () => {
                 <h2>Criar Conta</h2>
                 <form onSubmit={handleRegister}>
                     <div className="input-group">
-                        <input 
-                            type="email" 
-                            placeholder="Seu melhor email" 
-                            onChange={e => setEmail(e.target.value)} 
-                            required 
+                        <input
+                            type="email"
+                            placeholder="Seu melhor email"
+                            onChange={e => setEmail(e.target.value)}
+                            required
                         />
-                        <input 
-                            type="password" 
-                            placeholder="Mínimo 3 caracteres" 
-                            onChange={e => setPassword(e.target.value)} 
-                            required 
+                        <input
+                            type="password"
+                            placeholder="Mínimo 3 caracteres"
+                            onChange={e => setPassword(e.target.value)}
+                            required
                         />
+                        {/* Campo de Validação */}
+                        <input
+                            type="password"
+                            placeholder="Confirme sua senha"
+                            style={{ borderColor: confirmPassword && password !== confirmPassword ? '#c64200' : '' }}
+                            onChange={e => setConfirmPassword(e.target.value)}
+                            required
+                        />
+
                         <button id="login-button" type="submit">Cadastrar</button>
                     </div>
                 </form>
