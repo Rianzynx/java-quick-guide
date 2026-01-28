@@ -1,75 +1,81 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-# java-quick-guide
-Guia rápido de Java com exemplos práticos, feito com Java + Spring Boot e React.
-=======
->>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
-# ☕ Java Learning Guide
+# 🚀 Java Quick Guide - Full Stack Project
 
-Um guia interativo e moderno para consulta rápida de conceitos fundamentais e avançados da linguagem Java. Este projeto foi desenvolvido para auxiliar desenvolvedores a revisarem sintaxes, regras de negócio e casos de uso de forma visual e organizada.
+Um guia interativo para aprendizado de Java, construído com uma arquitetura moderna separando o **Frontend** (React) do **Backend** (Spring Boot), com persistência de dados real em **PostgreSQL**.
+
+
 
 ---
 
-## 🚀 Funcionalidades
-
-- **Busca em Tempo Real:** Filtro inteligente que busca por títulos ou descrições entre os tópicos.
-- **Visualização Detalhada:** Explicações profundas incluindo "O que é", "Quando usar" e "Nível de dificuldade".
-- **Snippets de Código:** Exemplos práticos formatados com foco em legibilidade.
-- **Interface Dark Mode:** Design focado em conforto visual (UI/UX) para desenvolvedores.
-- **Scroll Customizado:** Sistema de navegação fluida com barra de rolagem oculta.
-
 ## 🛠️ Tecnologias Utilizadas
 
-- **React.js**: Biblioteca base para a construção da interface.
-- **Vite**: Ferramenta de build ultra-rápida.
-- **CSS3**: Estilização moderna com Flexbox e seletores avançados.
-- **JavaScript (ES6+)**: Lógica de filtragem e manipulação de estados.
+### **Backend**
+* **Java 21** & **Spring Boot 3**
+* **Spring Data JPA**: Abstração de banco de dados.
+* **Spring Security & JWT**: Preparado para autenticação.
+* **PostgreSQL**: Banco de dados relacional robusto.
+* **Lombok**: Para um código Java mais limpo.
 
-## 📚 Tópicos Cobertos
+### **Frontend**
+* **React**: Biblioteca para interfaces dinâmicas.
+* **Vite**: Ferramenta de build rápida.
+* **React Syntax Highlighter**: Para exibição elegante de códigos Java.
+* **CSS Moderno**: Layout responsivo e interativo.
 
-O guia abrange as principais áreas da linguagem:
-* **Fundamentos:** Estruturas de repetição, condicionais e tipos de dados.
-* **POO:** Classes, Herança, Interfaces, Polimorfismo e Encapsulamento.
-* **Java Moderno (8+):** Streams API, Optional, Lambda Expressions e API de Datas.
-* **Performance:** Manipulação de Strings com StringBuilder e Records.
+---
 
-## 💻 Como Rodar o Projeto Localmente
+## 🏗️ Estrutura do Projeto
 
-1. **Clone o repositório:**
-   git clone https://github.com/Rianzynx/java-quick-guide
+O repositório está organizado de forma clara para facilitar a manutenção:
 
-2. **Instale as dependências:**
-   npm install
+- `backend/`: Código fonte da API Java, configurações do Maven e banco de dados.
+- `frontend/`: Interface do usuário em React e consumo da API.
 
-3. **Inicie o ambiente de desenvolvimento:**
-   npm run dev
+---
 
-4. **Para gerar a versão final (Build):**
-   npm run build
+## 🚀 Como Executar o Projeto
+
+### 1. Pré-requisitos
+* Java JDK 17 ou superior.
+* Node.js instalado.
+* PostgreSQL rodando localmente.
+
+### 2. Configuração do Banco de Dados
+No seu terminal PostgreSQL ou pgAdmin, crie o banco:
+```sql
+CREATE DATABASE guia_java;
+```
+
+### 3. Rodando o Backend
+* **Navegue até a pasta: ´cd backend´**
+* **Configure a senha do seu banco no arquivo**
+  - `src/main/resources/application.properties`
+* **Navegue até a pasta: cd backend** 
+```sql
+./mvnw spring-boot:run
+```
+
+### 4. Rodando o Frontend
+* **Navegue até a pasta: `cd frontend`**
+* **Instale as dependências:**
+```sql
+npm install
+```
+* **Inicie o servidor de desenvolvimento:**
+```sql
+npm run dev
+```
+* **Acesse o projeto em: `http://localhost:5173`**
 
 ## 📂 Estrutura do Projeto
 
 * `src/assets/` -> Imagens e ícones do sistema
 * `src/components/` -> Componentes da interface
-* `src/data/topics.js` -> Banco de dados estático
 * `src/App.jsx` -> Componente mestre e lógica de filtros
 * `src/main.jsx` -> Ponto de entrada do React
 
 ## 🖼️ Screenshots
 
-1. **Pagina inicial**
-![Página Inicial](./frontend/screenshots/index.png)
-
-2. **Resultado da pesquisa**
-![Busca](./frontend/screenshots/search.png)
-
-3. **Pesquisa em detalhe**
-![Detalhes](./frontend/screenshots/details.png)
+<div align="center"> <img src="./frontend/screenshots/index.png" alt="Página Inicial" width="400px"> <img src="./frontend/screenshots/search.png" alt="Busca" width="400px"> <img src="./frontend/screenshots/details.png" alt="Detalhes" width="400px"> <img src="./frontend/screenshots/menuUser.png" alt="MenuUser" width="400px"> </div
 
 ---
 Desenvolvido com ☕ e React por **Rian**
-<<<<<<< HEAD
-=======
->>>>>>> 9fc27a8 (Add screenshots to README)
->>>>>>> 6fe292e74c7fca62d9be79155562537175ff78e5
