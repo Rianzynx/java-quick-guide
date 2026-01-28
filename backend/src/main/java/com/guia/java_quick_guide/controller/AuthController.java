@@ -5,6 +5,8 @@ import com.guia.java_quick_guide.model.User;
 import com.guia.java_quick_guide.repository.UserRepository;
 import com.guia.java_quick_guide.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,14 +30,25 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public String login(@RequestBody Map<String, String> data) {
-        User user = repository.findByEmail(data.get("email")).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+    public ResponseEntity login(@RequestBody Map<String, String> data) {
+        // Busca o usuario
+        var userOptional = repository.findByEmail(data.get("email"));
 
-        if(encoder.matches(data.get("password"), user.getPassword())) {
-            return tokenService.generateToken(user);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não encontrado");
         }
 
-        return "Senha invalida";
+        var user = userOptional.get();
+
+        // Verifica a senha
+        if (encoder.matches(data.get("password"), user.getPassword())) {
+            String token = tokenService.generateToken(user);
+            // Retorna o token em um Map para virar um JSON { "token": "..." }
+            return ResponseEntity.ok(Map.of("token", token));
+        }
+
+        // Se a senha estiver errada, retorna 401
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha inválida");
     }
 }
 

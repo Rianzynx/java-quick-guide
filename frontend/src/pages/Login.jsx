@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import javaLogo from '../assets/java.svg';
 import { FaGithubSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
+import api from '../services/api';
 
 //Estilos
 import '../style/Login.css';
@@ -19,22 +20,28 @@ export const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
-            });
+        // Usando o Axios 
+        const response = await api.post('/auth/login', { 
+            email, 
+            password 
+        });
 
-            if (response.ok) {
-                const tokenGerado = await response.text();
-                login(tokenGerado);
-                navigate('/'); // Volta para a tela principal
-            } else {
-                alert("Falha no login. Verifique suas credenciais.");
-            }
-        } catch (error) {
-            console.error("Erro ao conectar ao servidor", error);
+        // No Axios os dados chegam direto em response.data
+        // Java retorna uma String pura (token), usamos response.data
+        if (response.status === 200) {
+            const tokenGerado = response.data; 
+            login(tokenGerado);
+            navigate('/');
         }
+    } catch (error) {
+        // O Axios cai no catch automaticamente para erros 4xx e 5xx
+        if (error.response && error.response.status === 403) {
+            alert("Senha inválida ou usuário não encontrado.");
+        } else {
+            console.error("Erro ao conectar ao servidor", error);
+            alert("Erro de conexão com o servidor.");
+        }
+    }
     };
 
     return (
