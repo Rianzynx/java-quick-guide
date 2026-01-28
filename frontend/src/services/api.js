@@ -6,23 +6,19 @@ const api = axios.create({
 
 // Interceptor para capturar erros de resposta
 api.interceptors.response.use(
-    (response) => {
-        // Se a resposta for sucesso, apenas a retorna
-        return response;
-    },
+    (response) => response,
     (error) => {
-        // Se o erro for 401 (Não autorizado) ou 403 (Proibido/Expirado)
+        // Pega a URL da requisição que falhou
+        const originalRequest = error.config;
+
+        // Se o erro for 401 ou 403 E NÃO for na rota de login
         if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-            
-            console.warn("Sessão expirada ou inválida. Redirecionando...");
-            
-            // 1. Limpa os dados do usuário
-            localStorage.removeItem('token');
-            
-            // 2. Redireciona para o login (forçando o reload para limpar estados)
-            window.location.href = '/login';
+            if (!originalRequest.url.includes('/auth/login')) {
+                console.warn("Sessão expirada. Redirecionando...");
+                localStorage.removeItem('token');
+                window.location.href = '/login';
+            }
         }
-        
         return Promise.reject(error);
     }
 );
