@@ -95,6 +95,14 @@ function App() {
         }
       });
 
+      // Tratamento para token expirado ou inválido
+      if (response.status === 401 || response.status === 403) {
+        console.warn("Sessão expirada. Redirecionando...");
+        localStorage.removeItem('token');
+        window.location.href = '/login'; // Força o redirecionamento
+        return;
+      }
+
       if (response.ok) {
         const data = await response.json();
         setTopics(data); // tópicos vão preencher a tela!
