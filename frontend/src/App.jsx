@@ -105,7 +105,7 @@ function App() {
 
       if (response.ok) {
         const data = await response.json();
-        setTopics(data); // tópicos vão preencher a tela!
+        setTopics(data); // tópicos vão preencher a tela
       }
     } catch (error) {
       console.error("Erro ao carregar tópicos:", error);
