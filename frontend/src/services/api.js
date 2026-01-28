@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-console.log("Conectando em:", url + '/api'); // Isso vai aparecer no console do navegador
+console.log("Conectando em:", url + '/api'); 
 
 const api = axios.create({
     baseURL: (import.meta.env.VITE_API_URL || 'http://localhost:8080').replace(/\/$/, "") + '/api'

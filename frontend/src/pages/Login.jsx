@@ -21,7 +21,7 @@ export const Login = () => {
         e.preventDefault();
         try {
         // Usando o Axios 
-        const response = await api.post('/auth/login', { 
+        const response = await api.post('auth/login', { 
             email, 
             password 
         });

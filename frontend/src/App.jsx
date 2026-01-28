@@ -4,6 +4,7 @@ import { AuthProvider, AuthContext } from './Contexts/AuthContext.jsx';
 import { Home } from './pages/Home.jsx';
 import { Login } from './pages/Login.jsx';
 import { Register } from './pages/Register.jsx';
+import api from './services/api'; 
 
 // Fontes
 import "@fontsource/jetbrains-mono"; 
@@ -14,8 +15,6 @@ import './style/Home.css'
 import './style/SearchResult.css'
 import './style/TopicDetails.css'
 
-
-// componente interno para as Rotas
 const AppRoutes = ({ 
   sidebarOpen, setSidebarOpen, search, setSearch, 
   activeSection, setActiveSection, loading, selectedTopic, 
@@ -64,74 +63,47 @@ function App() {
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    // Só tenta buscar se o token existir!
-    if (token) {
-      fetchTopics(token);
-    }
-  }, []);
-
-  // Carregamento de dados da API (Fetch)
+  // Carregamento de dados da API usando AXIOS
   const fetchTopics = async () => {
     try {
       setLoading(true);
-      // Pega o token que acabou de salvar no localStorage
-      const token = localStorage.getItem('token');
+      
+      // Chamada usando a instância 'api' (já tem a baseURL e o token via interceptor)
+      const response = await api.get('/topics');
 
-      // faz a requisição se o token existir
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-
-      const response = await fetch("topics", {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          // Envia o token no cabeçalho Authorization
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      // Tratamento para token expirado ou inválido
-      if (response.status === 401 || response.status === 403) {
-        console.warn("Sessão expirada. Redirecionando...");
-        localStorage.removeItem('token');
-        window.location.href = '/login'; // Força o redirecionamento
-        return;
-      }
-
-      if (response.ok) {
-        const data = await response.json();
-        setTopics(data); // tópicos vão preencher a tela
-      }
+      // No Axios, os dados vêm dentro de .data
+      setTopics(response.data); 
+      
     } catch (error) {
       console.error("Erro ao carregar tópicos:", error);
+      // O tratamento de 401/403 deve estar no seu interceptor do api.js
     } finally {
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetchTopics();
+    } else {
+        setLoading(false);
+    }
+  }, []);
 
-  // Normaliza texto removendo acentos para busca
   const normalizeText = (text) => {
-    return text
+    return text ? text
       .toLowerCase()
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+      .replace(/[\u0300-\u036f]/g, "") : "";
   }
 
-  // Filtra tópicos por busca e categoria
   const filteredTopics = topics.filter(topic => {
     const matchesSearch = normalizeText(topic.title).includes(normalizeText(search));
     const matchesCategory = filterCategory === 'Todos' || topic.category === filterCategory;
     return matchesSearch && matchesCategory;
-  })
-    .sort((a, b) => a.title.localeCompare(b.title));
+  }).sort((a, b) => (a.title || "").localeCompare(b.title || ""));
 
-  // Extrai categorias únicas dos tópicos
   const categories = ['Todos', ...new Set(topics.map(t => t.category))];
 
   return (
