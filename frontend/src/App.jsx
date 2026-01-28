@@ -6,27 +6,27 @@ import { Login } from './pages/Login.jsx';
 import { Register } from './pages/Register.jsx';
 import api from './services/api';
 
-// Fontes
+// Fontes e Estilos
 import "@fontsource/jetbrains-mono"; 
 import "@fontsource/jetbrains-mono/400.css";
-
-// Estilos
 import './style/Home.css'
 import './style/SearchResult.css'
 import './style/TopicDetails.css'
 
-// COMPONENTE DE ROTAS (Recebendo fetchTopics como Prop)
-const AppRoutes = ({ 
-  fetchTopics, 
-  sidebarOpen, setSidebarOpen, search, setSearch, 
-  activeSection, setActiveSection, loading, selectedTopic, 
-  setSelectedTopic, categories, filterCategory, setFilterCategory, filteredTopics 
-}) => {
+// 1. O AppRoutes DEVE receber fetchTopics como prop para não dar "not defined"
+const AppRoutes = (props) => {
   const { token } = useContext(AuthContext);
- 
+  
+  // Desestruturando as props para facilitar o uso
+  const { 
+    fetchTopics, sidebarOpen, setSidebarOpen, search, setSearch, 
+    activeSection, setActiveSection, loading, selectedTopic, 
+    setSelectedTopic, categories, filterCategory, setFilterCategory, filteredTopics 
+  } = props;
+
   return (
     <Routes>
-      {/* Agora passamos a função para o Login carregar os dados após autenticar */}
+      {/* Passamos fetchTopics para o Login como onLoginSuccess */}
       <Route path="/login" element={<Login onLoginSuccess={fetchTopics} />} />
       <Route path="/register" element={<Register />} />
       <Route
@@ -66,11 +66,12 @@ function App() {
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Carregamento de dados da API usando AXIOS
+  // 2. Definimos a função de busca de tópicos
   const fetchTopics = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/topics');
+      // Usando api.get('/topics') - O Axios cuidará da URL base
+      const response = await api.get('topics');
       setTopics(response.data);
     } catch (error) {
       console.error("Erro ao carregar tópicos:", error);
@@ -79,7 +80,6 @@ function App() {
     }
   };
 
-  // Carrega ao montar o app se já estiver logado
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -89,20 +89,19 @@ function App() {
     }
   }, []);
 
+  // Normalização para busca
   const normalizeText = (text) => {
-    return text ? text
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "") : "";
+    return text ? text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
   }
 
   const filteredTopics = topics.filter(topic => {
-    const matchesSearch = normalizeText(topic.title).includes(normalizeText(search)); 
-    const matchesCategory = filterCategory === 'Todos' || topic.category === filterCategory; 
+    const matchesSearch = normalizeText(topic.title).includes(normalizeText(search));
+    const matchesCategory = filterCategory === 'Todos' || (topic.category) === filterCategory;
     return matchesSearch && matchesCategory;
   }).sort((a, b) => (a.title || "").localeCompare(b.title || ""));
 
-  const categories = ['Todos', ...new Set(topics.map(t => t.category))];
+  const categories = ['Todos', ...new Set(topics.map(t => t.category).filter(Boolean))];
+
   return (
     <AuthProvider> 
       <BrowserRouter>
