@@ -3,8 +3,8 @@ FROM maven:3.9.6-eclipse-temurin-21 AS build
 COPY . .
 RUN mvn clean package -DskipTests
 
-# Estágio de Execução - MUDADO PARA 21 TAMBÉM
+# Estágio de Execução 
 FROM eclipse-temurin:21-jdk-jammy
 COPY --from=build /target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-Djava.net.preferIPv4Stack=true", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
