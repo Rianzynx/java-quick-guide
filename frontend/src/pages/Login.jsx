@@ -13,12 +13,16 @@ export const Login = ({ onSwitch, onLoginSuccess }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+    const [loading, setLoading] = useState(false);
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return;
+
         setErrorMsg('');
+        setLoading(true);
 
         try {
             // Usando o Axios 
@@ -48,6 +52,8 @@ export const Login = ({ onSwitch, onLoginSuccess }) => {
             } else {
                 setErrorMsg("Não foi possível conectar ao servidor.");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -61,7 +67,14 @@ export const Login = ({ onSwitch, onLoginSuccess }) => {
                 <div className='input-group'>
                     <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} required />
                     <input type="password" placeholder="Senha" onChange={e => setPassword(e.target.value)} required />
-                    <button id="login-button" type="submit">Entrar</button>
+                    <button 
+                        id="login-button" 
+                        type="submit" 
+                        disabled={loading} 
+                        style={{ opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
+                    >
+                        {loading ? 'Entrando...' : 'Entrar'}
+                    </button>
                 </div>
             </form>
             <p className="link-auth">
