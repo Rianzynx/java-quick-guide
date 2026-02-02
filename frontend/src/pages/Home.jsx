@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { FaCalendarAlt, FaCode, FaStream, FaUserCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import Sidebar from '../components/Sidebar';
@@ -13,12 +14,12 @@ export const Home = ({
     activeSection, setActiveSection,
     loading, selectedTopic, setSelectedTopic,
     categories, filterCategory, setFilterCategory,
-    filteredTopics
+    filteredTopics, onNavigate
 }) => {
 
     const [showUserMenu, setShowUserMenu] = useState(false);
     const { logout, user } = useContext(AuthContext);
-
+    const navigate = useNavigate();
     // referência para o container do menu
     const menuRef = useRef(null);
 
@@ -67,13 +68,16 @@ export const Home = ({
                                 </div>
                                 <hr className="dropdown-divider" />
                                 <ul>
-                                    <li onClick={() => alert('Perfil em desenvolvimento')}>
+                                    <li onClick={() => { setShowUserMenu(false); navigate('/em-breve'); }}>
                                         <FaUserCircle size={18} /> Meu Perfil
                                     </li>
-                                    <li onClick={() => alert('Configurações em desenvolvimento')}>
+
+                                    <li onClick={() => { setShowUserMenu(false); navigate('/em-breve'); }}>
                                         <FaCode size={18} /> Configurações
                                     </li>
+
                                     <hr className="dropdown-divider" />
+
                                     <li onClick={logout} className="logout-option">
                                         <FaStream size={18} style={{ transform: 'rotate(90deg)' }} /> Sair
                                     </li>
@@ -84,7 +88,7 @@ export const Home = ({
                 </div>
             </div>
 
-            <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} onNavigate={setActiveSection} />
+            <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} onNavigate={onNavigate} />
 
             <main className="main-content">
                 {loading ? (
@@ -116,7 +120,7 @@ export const Home = ({
                 ) : (
                     <>
                         <section className="welcome-section">
-                            <h1>Bem-vindo</h1>
+                            <h1>Bem-vindo, <span style={{ color: '#d09c6b' }}>{user?.name || 'Usuário'}</span></h1>
                             <p>Aprenda Java de forma prática e direta. Explore tópicos, veja exemplos de código e teste suas habilidades.</p>
                         </section>
 

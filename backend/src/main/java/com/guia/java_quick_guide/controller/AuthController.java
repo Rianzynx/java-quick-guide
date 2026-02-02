@@ -1,9 +1,11 @@
 package com.guia.java_quick_guide.controller;
 
 
+import com.guia.java_quick_guide.dto.LoginResponseDTO;
 import com.guia.java_quick_guide.model.User;
 import com.guia.java_quick_guide.repository.UserRepository;
 import com.guia.java_quick_guide.service.TokenService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,25 +32,29 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody Map<String, String> data) {
-        // Busca o usuario
-        var userOptional = repository.findByEmail(data.get("email"));
+    public ResponseEntity<?> login(@RequestBody @Valid LoginResponseDTO data) {
+        // Tenta buscar o usuário sem lançar Exception de erro 500
+        var userOptional = repository.findByEmail(data.email());
 
         if (userOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não encontrado");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("E-mail ou senha incorretos");
         }
 
-        var user = userOptional.get();
+        User user = userOptional.get();
 
-        // Verifica a senha
-        if (encoder.matches(data.get("password"), user.getPassword())) {
+        // Compara a senha
+        if (encoder.matches(data.password(), user.getPassword())) {
             String token = tokenService.generateToken(user);
-            // Retorna o token em um Map para virar um JSON { "token": "..." }
-            return ResponseEntity.ok(Map.of("token", token));
+
+            // Retorna um JSON, não apenas uma String pura, para o React ler melhor
+            return ResponseEntity.ok(Map.of(
+                    "token", token,
+                    "name", user.getName(),
+                    "email", user.getEmail()
+            ));
         }
 
-        // Se a senha estiver errada, retorna 401
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha inválida");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("E-mail ou senha incorretos");
     }
 }
 

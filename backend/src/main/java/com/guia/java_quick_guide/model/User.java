@@ -25,6 +25,9 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String name;
+
     @Email(message = "O formato de email é inválido")
     @NotBlank(message = "O email não pode estar em branco")
     @Column(unique = true, nullable = false)

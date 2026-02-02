@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, AuthContext } from './Contexts/AuthContext.jsx';
+import { AuthContext } from './Contexts/AuthContext.jsx';
 import { Home } from './pages/Home.jsx';
 import api from './services/api';
+import TempPage from './pages/TempPage.jsx';
 import { AuthPage } from './pages/AuthPage';
 
 // Fontes e Estilos
@@ -20,7 +21,7 @@ const AppRoutes = (props) => {
   const {
     fetchTopics, sidebarOpen, setSidebarOpen, search, setSearch,
     activeSection, setActiveSection, loading, selectedTopic,
-    setSelectedTopic, categories, filterCategory, setFilterCategory, filteredTopics
+    setSelectedTopic, categories, filterCategory, setFilterCategory, filteredTopics, onNavigate
   } = props;
 
   return (
@@ -28,6 +29,9 @@ const AppRoutes = (props) => {
       {/* Passamos fetchTopics para o Login como onLoginSuccess */}
       <Route path="/login" element={<AuthPage onLoginSuccess={fetchTopics} />} />
       <Route path="/register" element={<AuthPage onLoginSuccess={fetchTopics} />} />
+
+      <Route path="/em-breve" element={<TempPage />} />
+
       <Route
         path="/"
         element={
@@ -46,6 +50,7 @@ const AppRoutes = (props) => {
               filterCategory={filterCategory}
               setFilterCategory={setFilterCategory}
               filteredTopics={filteredTopics}
+              onNavigate={props.onNavigate}
             />
           ) : (
             <Navigate to="/login" replace />
@@ -64,6 +69,13 @@ function App() {
   const [filterCategory, setFilterCategory] = useState("Todos");
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  //função para resetar navegação
+  const handleNavigation = (section) => {
+    setActiveSection(section);
+    setSelectedTopic(null);
+    setSearch('');
+  };
 
   // função de buscar de tópicos
   const fetchTopics = async () => {
@@ -107,9 +119,10 @@ function App() {
   const categories = ['Todos', ...new Set(topics.map(t => t.category).filter(Boolean))];
 
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="app-main-wrapper">
         <AppRoutes
+          onNavigate={handleNavigation}
           fetchTopics={fetchTopics}
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}

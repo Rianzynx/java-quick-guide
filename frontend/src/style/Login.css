@@ -165,7 +165,7 @@ input::placeholder {
     background: rgba(67, 67, 67, 0.05) !important;
 }
 
-#login-button {
+#login-button, #register-button {
     padding: 10px;
     background-color: #ff6f00;
     color: white;
@@ -178,7 +178,7 @@ input::placeholder {
     margin: 20px 0px;
 }
 
-#login-button:hover {
+#login-button:hover, #register-button:hover {
     background-color: #e65c00;
 }
 

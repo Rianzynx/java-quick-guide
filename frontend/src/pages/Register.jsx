@@ -10,15 +10,19 @@ export const Register = ({ onSwitch }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const [fieldErrors, setFieldErrors] = useState({})
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        if (loading) return;
         setFieldErrors({});
 
+        setLoading(true);
+
         // Validações básicas no Front-end
-        if (password.length < 4) {
-            setFieldErrors({ password: "A senha deve ter no mínimo 4 caracteres!" });
+        if (password.length < 6) {
+            setFieldErrors({ password: "A senha deve ter no mínimo 6 caracteres!" });
             return;
         }
 
@@ -56,6 +60,8 @@ export const Register = ({ onSwitch }) => {
             } else {
                 alert("Ocorreu um erro inesperado ao conectar ao servidor.");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -83,7 +89,7 @@ export const Register = ({ onSwitch }) => {
                     {fieldErrors.email && <span className="error-message">{fieldErrors.email}</span>}
                     <input
                         type="password"
-                        placeholder="Senha (mínimo 4 caracteres)"
+                        placeholder="Senha (mínimo 6 caracteres)"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         required
@@ -100,7 +106,14 @@ export const Register = ({ onSwitch }) => {
                         required
                     />
 
-                    <button id="login-button" type="submit">Cadastrar</button>
+                    <button 
+                        id="register-button" 
+                        type="submit" 
+                        disabled={loading} 
+                        style={{ opacity: loading ? 0.7 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
+                    >
+                        {loading ? 'Cadastrando...' : 'Cadastrar'}
+                    </button>
                 </div>
             </form>
             <p className="link-auth">

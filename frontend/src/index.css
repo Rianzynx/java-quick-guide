@@ -148,12 +148,12 @@ li:hover {
 }
 
 .sidebar-menu li {
-  padding: 10px 12px;
+  width: auto;
+  padding: 10px 10%;
   margin-bottom: 6px;
   border-radius: 6px;
   cursor: pointer;
   color: #ccc;
-  transform: translate(1);
   transition: background 0.4s, color 0.2s, transform 0.2s;
 }
 
@@ -195,6 +195,16 @@ li:hover {
 .sidebar-closed .sidebar {
   width: 5%;
   min-width: 70px;
+}
+
+.sidebar-closed li {
+  width: auto;
+  padding: 10px 5%;
+}
+
+.sidebar-closed li #icons {
+  width: 100%;
+  
 }
 
 .sidebar-closed .sidebar-content {
