@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-console.log("Conectando em:", url + '/api'); 
+console.log("Conectando em:", url + '/api');
 
 const api = axios.create({
     baseURL: (import.meta.env.VITE_API_URL || 'http://localhost:8080').replace(/\/$/, "") + '/api'
@@ -16,7 +16,7 @@ api.interceptors.response.use(
 
         // Se o erro for 401 ou 403 E NÃO for na rota de login
         if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-            if (!originalRequest.url.includes('/auth/login')) {
+            if (!originalRequest.url.includes('auth/login')) { 
                 console.warn("Sessão expirada. Redirecionando...");
                 localStorage.removeItem('token');
                 window.location.href = '/login';
