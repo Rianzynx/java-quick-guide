@@ -1,23 +1,37 @@
+import { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 function SearchBar({ search, onSearchChange }) {
+  const [displayValue, setDisplayValue] = useState(search);
+
+  // Debounce: Só envia a busca após o usuário parar de digitar por 300ms
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      onSearchChange(displayValue);
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [displayValue, onSearchChange]);
+
   return (
     <div className="search-input-container">
       <input
         type="text"
-        placeholder="Buscar tópico (ex: LocalDate, Enum, Stream...)"
-        value={search}
-        onChange={(e) => onSearchChange(e.target.value)}
+        placeholder="Buscar tópico..."
+        value={displayValue}
+        onChange={(e) => setDisplayValue(e.target.value)}
       />
       
-      {search && (
+      {displayValue && (
         <FaTimes 
           className="clear-icon" 
-          onClick={() => onSearchChange('')} 
+          onClick={() => {
+            setDisplayValue('');
+            onSearchChange('');
+          }} 
         />
       )}
     </div>
   );
 }
-
 export default SearchBar;

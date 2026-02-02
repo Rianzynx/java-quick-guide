@@ -5,7 +5,7 @@ import SearchBar from '../components/SearchBar';
 import Sidebar from '../components/Sidebar';
 import TopicList from '../components/TopicList';
 import TopicDetails from '../components/TopicDetails';
-import { AuthContext } from '../Contexts/AuthContext.jsx'; 
+import { AuthContext } from '../Contexts/AuthContext.jsx';
 
 export const Home = ({
     sidebarOpen, setSidebarOpen,
@@ -17,7 +17,7 @@ export const Home = ({
 }) => {
 
     const [showUserMenu, setShowUserMenu] = useState(false);
-    const { logout } = useContext(AuthContext);
+    const { logout, user } = useContext(AuthContext);
 
     // referência para o container do menu
     const menuRef = useRef(null);
@@ -33,7 +33,7 @@ export const Home = ({
 
         // Adiciona o evento ao carregar
         document.addEventListener('mousedown', handleClickOutside);
-        
+
         // Limpa o evento ao destruir o componente 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
@@ -50,18 +50,33 @@ export const Home = ({
                     <div className="user-menu-wrapper" ref={menuRef} style={{ position: 'relative' }}>
                         <FaUserCircle
                             size={32}
-                            color="#e7e7e7"
+                            color={showUserMenu ? "#ff6f00" : "#e7e7e7"} // Muda a cor quando aberto
+                            style={{
+                                transition: 'color 0.3s',
+                                filter: showUserMenu ? 'drop-shadow(0 0 8px #944000)' : 'none'
+                            }}
                             cursor="pointer"
-                            onClick={() => setShowUserMenu(!showUserMenu)} 
+                            onClick={() => setShowUserMenu(!showUserMenu)}
                         />
 
                         {showUserMenu && (
                             <div className="user-dropdown">
+                                <div className="dropdown-header">
+                                    <span className="user-name">{user?.name || 'Usuário'}</span>
+                                    <span className="user-email">{user?.email || 'E-mail não disponível'}</span>
+                                </div>
+                                <hr className="dropdown-divider" />
                                 <ul>
-                                    <li onClick={() => alert('Perfil em desenvolvimento')}>Meu Perfil</li>
-                                    <li onClick={() => alert('Configurações em desenvolvimento')}>Configurações</li>
-                                    <hr />
-                                    <li onClick={logout} className="logout-option">Sair</li>
+                                    <li onClick={() => alert('Perfil em desenvolvimento')}>
+                                        <FaUserCircle size={18} /> Meu Perfil
+                                    </li>
+                                    <li onClick={() => alert('Configurações em desenvolvimento')}>
+                                        <FaCode size={18} /> Configurações
+                                    </li>
+                                    <hr className="dropdown-divider" />
+                                    <li onClick={logout} className="logout-option">
+                                        <FaStream size={18} style={{ transform: 'rotate(90deg)' }} /> Sair
+                                    </li>
                                 </ul>
                             </div>
                         )}
